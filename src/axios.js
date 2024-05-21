@@ -12,6 +12,7 @@ const instance = axios.create({
 });
 
 export const getRequest = async (url, params = {}, responseType = "json") => {
+
   return instance.get(url, {
     params,
     responseType,
@@ -25,7 +26,18 @@ export const postRequest = async (url, data, options) => {
         ? undefined
         : options.contentType;
   }
-  const response = await instance.post(url, data);
-  instance.defaults.headers["Content-Type"] = "application/json";
-  return response;
+
+  console.log('Submitting POST request to:', url);
+  console.log('Data:', data);
+
+  try {
+    const response = await instance.post(url, data);
+    instance.defaults.headers["Content-Type"] = "application/json";
+    alert('Product Successfully Added')
+    return response
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+  return null;
 };
